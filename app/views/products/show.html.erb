@@ -1,0 +1,41 @@
+<% content_for :title, @product.name %>
+
+<p><%= link_to "← Back to products", root_path %></p>
+
+<div class="detail">
+  <div>
+    <%= image_tag @product.image_url.presence || "https://placehold.co/600x450?text=No+Image",
+          alt: @product.name %>
+  </div>
+  <div>
+    <h1><%= @product.name %></h1>
+    <div class="stars">
+      <%= stars_for(@product.average_rating) %>
+      <span class="muted">(<%= pluralize(@product.reviews_count, "review") %>)</span>
+    </div>
+    <p class="price" style="font-size:1.5rem;"><%= money(@product.price) %></p>
+    <p><%= simple_format(@product.description) %></p>
+
+    <%= form_with url: line_items_path, method: :post, local: true do %>
+      <%= hidden_field_tag :product_id, @product.id %>
+      <div class="actions">
+        <label class="muted">Qty</label>
+        <%= number_field_tag :quantity, 1, min: 1, style: "width:70px;" %>
+        <%= submit_tag "Add to Cart", class: "btn" %>
+      </div>
+    <% end %>
+
+    <% if logged_in? && current_user.admin? %>
+      <div class="actions">
+        <%= link_to "Edit", edit_product_path(@product), class: "btn btn-secondary" %>
+        <%= button_to "Delete", product_path(@product), method: :delete, class: "btn btn-danger",
+              form: { data: { turbo_confirm: "Delete this product?" } } %>
+      </div>
+    <% end %>
+  </div>
+</div>
+
+<section class="card" style="margin-top:2rem;">
+  <%= render "reviews/section", product: @product, reviews: @reviews,
+        review: @review, user_review: @user_review %>
+</section>

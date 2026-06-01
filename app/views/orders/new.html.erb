@@ -1,0 +1,44 @@
+<% content_for :title, "Checkout" %>
+<h1>Checkout</h1>
+
+<div class="card">
+  <h3>Order summary</h3>
+  <table>
+    <% current_cart.line_items.includes(:product).each do |item| %>
+      <tr>
+        <td><%= item.product.name %> &times; <%= item.quantity %></td>
+        <td style="text-align:right;"><%= money(item.total_price) %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <th>Total</th>
+      <th style="text-align:right;"><%= money(current_cart.total_price) %></th>
+    </tr>
+  </table>
+</div>
+
+<div class="form-card">
+  <%= form_with model: @order, local: true do |f| %>
+    <% if @order.errors.any? %>
+      <div class="error-box">
+        <strong><%= pluralize(@order.errors.count, "error") %> prevented checkout:</strong>
+        <ul>
+          <% @order.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :name, "Full name" %>
+      <%= f.text_field :name %>
+    </div>
+    <div class="field">
+      <%= f.label :address, "Shipping address" %>
+      <%= f.text_field :address %>
+    </div>
+    <%= f.submit "Place Order" %>
+  <% end %>
+</div>
+<p><%= link_to "← Back to cart", cart_path %></p>

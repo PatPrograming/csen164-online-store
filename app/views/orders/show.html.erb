@@ -1,0 +1,33 @@
+<% content_for :title, "Order ##{@order.id}" %>
+<p><%= link_to "← Back to orders", orders_path %></p>
+
+<div class="card">
+  <div class="page-head">
+    <h1>Order #<%= @order.id %></h1>
+    <span class="muted"><%= @order.status.capitalize %></span>
+  </div>
+  <p class="muted">
+    Placed <%= @order.created_at.strftime("%B %d, %Y at %l:%M %p") %><br>
+    <strong><%= @order.name %></strong> — <%= @order.address %>
+    <% if current_user.admin? %><br>Customer: <%= @order.user.name %> (<%= @order.user.email %>)<% end %>
+  </p>
+
+  <table>
+    <thead>
+      <tr><th>Product</th><th>Price</th><th>Qty</th><th>Subtotal</th></tr>
+    </thead>
+    <tbody>
+      <% @order.line_items.includes(:product).each do |item| %>
+        <tr>
+          <td><%= link_to item.product.name, item.product %></td>
+          <td><%= money(item.product.price) %></td>
+          <td><%= item.quantity %></td>
+          <td><%= money(item.total_price) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+    <tfoot>
+      <tr><th colspan="3" style="text-align:right;">Total</th><th><%= money(@order.total_price) %></th></tr>
+    </tfoot>
+  </table>
+</div>

@@ -1,0 +1,35 @@
+<% content_for :title, "My Orders" %>
+<h1><%= current_user.admin? ? "All Orders" : "My Orders" %></h1>
+
+<% if @orders.any? %>
+  <div class="card">
+    <table>
+      <thead>
+        <tr>
+          <th>Order #</th>
+          <% if current_user.admin? %><th>Customer</th><% end %>
+          <th>Date</th>
+          <th>Items</th>
+          <th>Total</th>
+          <th>Status</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @orders.each do |order| %>
+          <tr>
+            <td>#<%= order.id %></td>
+            <% if current_user.admin? %><td><%= order.user.name %></td><% end %>
+            <td><%= order.created_at.strftime("%b %d, %Y") %></td>
+            <td><%= order.total_items %></td>
+            <td><%= money(order.total_price) %></td>
+            <td><%= order.status.capitalize %></td>
+            <td><%= link_to "View", order %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<% else %>
+  <p class="muted">You have no orders yet. <%= link_to "Start shopping", root_path %>.</p>
+<% end %>

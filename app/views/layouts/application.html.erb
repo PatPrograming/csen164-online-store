@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= content_for(:title) || "Rails Store" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Assignment2 0">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= yield :head %>
+
+    <%# Enable PWA manifest for installable apps (make sure to enable in config/routes.rb too!) %>
+    <%#= tag.link rel: "manifest", href: pwa_manifest_path(format: :json) %>
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <%# Includes all stylesheet files in app/assets/stylesheets %>
+    <%= stylesheet_link_tag :app, "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+
+  <body>
+    <header class="site-header">
+      <nav class="navbar">
+        <%= link_to "Rails Store", root_path, class: "brand" %>
+        <div class="nav-links">
+          <%= link_to "Products", root_path %>
+          <%= link_to cart_path, class: "cart-link" do %>
+            Cart
+            <% count = current_cart.total_items %>
+            <% if count > 0 %><span class="badge"><%= count %></span><% end %>
+          <% end %>
+          <% if logged_in? %>
+            <%= link_to "My Orders", orders_path %>
+            <% if current_user.admin? %>
+              <%= link_to "New Product", new_product_path %>
+            <% end %>
+            <span class="nav-user">Hi, <%= current_user.name %></span>
+            <%= button_to "Log out", logout_path, method: :delete, class: "linkish" %>
+          <% else %>
+            <%= link_to "Log in", login_path %>
+            <%= link_to "Sign up", signup_path %>
+          <% end %>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container">
+      <% flash.each do |type, message| %>
+        <div class="flash flash-<%= type %>"><%= message %></div>
+      <% end %>
+
+      <%= yield %>
+    </main>
+  </body>
+</html>

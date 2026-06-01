@@ -1,0 +1,27 @@
+<% content_for :title, "Edit review" %>
+<h1>Edit your review</h1>
+<p class="muted">for <%= link_to @product.name, @product %></p>
+
+<div class="form-card">
+  <%= form_with model: [@product, @review], local: true do |f| %>
+    <% if @review.errors.any? %>
+      <div class="error-box">
+        <ul>
+          <% @review.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="field">
+      <%= f.label :rating %>
+      <%= f.select :rating, (1..5).map { |n| ["#{n} star#{'s' if n > 1}", n] } %>
+    </div>
+    <div class="field">
+      <%= f.label :comment %>
+      <%= f.text_area :comment %>
+    </div>
+    <%= f.submit "Update review" %>
+  <% end %>
+</div>
+<p><%= link_to "← Back to product", @product %></p>

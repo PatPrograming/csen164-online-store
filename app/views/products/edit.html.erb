@@ -1,0 +1,6 @@
+<% content_for :title, "Edit product" %>
+<h1>Edit <%= @product.name %></h1>
+<div class="form-card">
+  <%= render "form" %>
+</div>
+<p><%= link_to "← Back", @product %></p>

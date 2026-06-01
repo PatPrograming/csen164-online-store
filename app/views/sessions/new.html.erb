@@ -1,0 +1,17 @@
+<% content_for :title, "Log in" %>
+<h1>Log in</h1>
+
+<div class="form-card">
+  <%= form_with url: login_path, local: true do |f| %>
+    <div class="field">
+      <%= f.label :email %>
+      <%= f.email_field :email, value: params[:email] %>
+    </div>
+    <div class="field">
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+    </div>
+    <%= f.submit "Log in" %>
+  <% end %>
+  <p class="muted">No account yet? <%= link_to "Sign up", signup_path %></p>
+</div>

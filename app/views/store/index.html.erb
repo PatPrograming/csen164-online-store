@@ -1,0 +1,37 @@
+<% content_for :title, "Products" %>
+
+<div class="page-head">
+  <h1>Products</h1>
+  <% if logged_in? && current_user.admin? %>
+    <%= link_to "Add product", new_product_path, class: "btn" %>
+  <% end %>
+</div>
+
+<%= form_with url: root_path, method: :get, local: true, class: "search-bar" do %>
+  <%= text_field_tag :q, @query, placeholder: "Search products by name or description..." %>
+  <%= submit_tag "Search" %>
+  <% if @query.present? %>
+    <%= link_to "Clear", root_path, class: "btn btn-secondary" %>
+  <% end %>
+<% end %>
+
+<% if @products.any? %>
+  <div class="product-grid">
+    <% @products.each do |product| %>
+      <div class="product-card">
+        <%= link_to product do %>
+          <%= image_tag product.image_url.presence || "https://placehold.co/400x300?text=No+Image",
+                alt: product.name %>
+        <% end %>
+        <div class="body">
+          <h3><%= link_to product.name, product %></h3>
+          <div class="stars"><%= stars_for(product.average_rating) %></div>
+          <p class="muted"><%= truncate(product.description, length: 70) %></p>
+          <span class="price"><%= money(product.price) %></span>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <p class="muted">No products found<%= " for \"#{@query}\"" if @query.present? %>.</p>
+<% end %>
