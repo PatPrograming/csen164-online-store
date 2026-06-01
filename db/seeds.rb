@@ -22,7 +22,7 @@ alice = User.create!(name: "Alice Nguyen", email: "alice@example.com", password:
 bob   = User.create!(name: "Bob Martinez", email: "bob@example.com",   password: "password", password_confirmation: "password")
 carol = User.create!(name: "Carol Smith",  email: "carol@example.com", password: "password", password_confirmation: "password")
 
-regular_users = [alice, bob, carol]
+regular_users = [ alice, bob, carol ]
 
 puts "Creating products..."
 products_data = [
@@ -59,7 +59,7 @@ products.each do |product|
 end
 
 puts "Creating orders..."
-[alice, bob].each do |user|
+[ alice, bob ].each do |user|
   2.times do
     order = user.orders.build(
       name: user.name,

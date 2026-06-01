@@ -1,6 +1,6 @@
 class OrdersController < ApplicationController
   before_action :require_login
-  before_action :set_order, only: [:show]
+  before_action :set_order, only: [ :show ]
 
   def index
     @orders = if current_user.admin?

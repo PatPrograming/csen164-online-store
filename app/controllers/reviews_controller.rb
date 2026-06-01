@@ -1,8 +1,8 @@
 class ReviewsController < ApplicationController
   before_action :require_login
   before_action :set_product
-  before_action :set_review, only: [:edit, :update, :destroy]
-  before_action :require_owner, only: [:edit, :update, :destroy]
+  before_action :set_review, only: [ :edit, :update, :destroy ]
+  before_action :require_owner, only: [ :edit, :update, :destroy ]
 
   def create
     @review = @product.reviews.build(review_params)

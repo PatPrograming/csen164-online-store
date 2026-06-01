@@ -11,12 +11,12 @@ Rails.application.routes.draw do
   post   "login",  to: "sessions#create"
   delete "logout", to: "sessions#destroy"
 
-  resources :products, except: [:index] do
-    resources :reviews, only: [:create, :edit, :update, :destroy]
+  resources :products, except: [ :index ] do
+    resources :reviews, only: [ :create, :edit, :update, :destroy ]
   end
 
-  resource :cart, only: [:show, :destroy]
-  resources :line_items, only: [:create, :update, :destroy]
+  resource :cart, only: [ :show, :destroy ]
+  resources :line_items, only: [ :create, :update, :destroy ]
 
-  resources :orders, only: [:index, :show, :new, :create]
+  resources :orders, only: [ :index, :show, :new, :create ]
 end

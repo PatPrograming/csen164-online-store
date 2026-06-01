@@ -1,5 +1,5 @@
 class LineItemsController < ApplicationController
-  before_action :set_line_item, only: [:update, :destroy]
+  before_action :set_line_item, only: [ :update, :destroy ]
 
   def create
     product = Product.find(params[:product_id])

@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
-  before_action :require_admin, except: [:show]
-  before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :require_admin, except: [ :show ]
+  before_action :set_product, only: [ :show, :edit, :update, :destroy ]
 
   def show
     @reviews = @product.reviews.includes(:user).order(created_at: :desc)
