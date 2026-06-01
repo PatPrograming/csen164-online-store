@@ -1,11 +1,11 @@
-# Online Store — Extension (CSEN 164 Assignment #2, Option A)
+# Online Store — Extension (Assignment #2, Option A)
 
 A Ruby on Rails 8 online store that extends the in-class demo store with user accounts,
 user-scoped order history, and a full product reviews feature.
 
 ## Project Description
 
-Online Store is a small but complete e-commerce application. Visitors can browse and
+Online Store is a e-commerce application. Visitors can browse and
 search products and read reviews. Registered users can add products to a session-based
 cart, check out to create an order tied to their account, view their own order history,
 and write/edit/delete reviews. An admin user can manage the product catalog and view
@@ -98,9 +98,8 @@ All seeded accounts use the password `password`.
 ## Known Limitations
 
 - Cart is stored per browser session (not persisted to a logged-in user across devices).
-- No real payment processing; checkout simply records an order.
-- Order status is set in seeds/checkout but there is no admin UI to change it.
-- Product images are referenced by URL (placeholder images by default).
+- No real payment processing; checkout records an order.
+- Product images are empty by default. Admin user may change it.
 
 ## Deployment
 
