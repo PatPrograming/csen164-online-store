@@ -130,3 +130,7 @@ aws ec2 delete-security-group --group-name railsstore-sg
 aws ec2 delete-key-pair --key-name railsstore
 aws ecr delete-repository --repository-name railsstore --force
 ```
+
+### Github Repo
+https://github.com/PatPrograming/csen164-online-store
+
