@@ -29,10 +29,15 @@ class OrdersController < ApplicationController
       return
     end
 
-    @order.add_line_items_from_cart(current_cart)
+    cart = current_cart
+    @order.add_line_items_from_cart(cart)
 
     if @order.save
-      current_cart.destroy
+      # The line items now belong to the order (cart_id is nil in the DB), but the
+      # cart's in-memory line_items association still references them. Reset it before
+      # destroying the cart so dependent: :destroy doesn't cascade and delete them.
+      cart.line_items.reset
+      cart.destroy
       session[:cart_id] = nil
       redirect_to @order, notice: "Thank you! Your order was placed."
     else
