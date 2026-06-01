@@ -1,11 +1,11 @@
-# Rails Store — Online Store Extension (CSEN 164 Assignment #2, Option A)
+# Online Store — Extension (CSEN 164 Assignment #2, Option A)
 
 A Ruby on Rails 8 online store that extends the in-class demo store with user accounts,
 user-scoped order history, and a full product reviews feature.
 
 ## Project Description
 
-Rails Store is a small but complete e-commerce application. Visitors can browse and
+Online Store is a small but complete e-commerce application. Visitors can browse and
 search products and read reviews. Registered users can add products to a session-based
 cart, check out to create an order tied to their account, view their own order history,
 and write/edit/delete reviews. An admin user can manage the product catalog and view

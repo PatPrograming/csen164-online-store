@@ -1,4 +1,4 @@
-# Seed data for the Rails Store demo.
+# Seed data for the Online Store demo.
 # Run with: bin/rails db:seed (idempotent — clears existing data first).
 
 puts "Clearing existing data..."
