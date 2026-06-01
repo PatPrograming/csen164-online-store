@@ -104,4 +104,29 @@ All seeded accounts use the password `password`.
 
 ## Deployment
 
-The application is deployed to AWS. See the submission for the live deployment link.
+The application is deployed to AWS on a single EC2 instance (Graviton/arm64,
+Ubuntu) using [Kamal](https://kamal-deploy.org), with the container image stored
+in Amazon ECR and the SQLite databases on a persistent Docker volume.
+
+**Live link:** http://35.161.45.210
+
+Redeploying after code changes:
+
+```bash
+# Requires Docker (colima), the AWS CLI, and the railsstore SSH key in ssh-agent
+bin/kamal deploy
+```
+
+### Tearing down AWS resources (to stop any further cost)
+
+```bash
+# Stop and remove the app from the server
+bin/kamal remove
+
+# Then terminate the AWS resources
+aws ec2 terminate-instances --instance-ids <instance-id>
+aws ec2 release-address --allocation-id <eip-allocation-id>
+aws ec2 delete-security-group --group-name railsstore-sg
+aws ec2 delete-key-pair --key-name railsstore
+aws ecr delete-repository --repository-name railsstore --force
+```
